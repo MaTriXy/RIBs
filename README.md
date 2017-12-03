@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/uber/RIBs.svg?branch=master)](https://travis-ci.org/uber/RIBs)
 
-RIBs is the cross-platform architecture behind many mobile apps at Uber. This architecture framework is designed for mobile apps with a large number of engineers and nested states.
+RIBs is the cross-platform architecture framework behind many mobile apps at Uber. The name RIBs is short of Router, Interactor and Builder, which are core components of this architecture. This framework is designed for mobile apps with a large number of engineers and nested states.
 
 The RIBs architecture provides:
 * **Shared architecture across iOS and Android.** Build cross-platform apps that have similar architecture, enabling iOS and Android teams to cross-review business logic code.
@@ -18,16 +18,30 @@ To get started with RIBs, please refer to the [RIBs documentation](https://githu
 
 To get more hands on with RIBs, we have written a [series of tutorials](https://github.com/uber/RIBs/wiki) that run you through the main aspects of the architecture with hands-on examples.
 
+To read about the backstory on why we created RIBs, see [this blog post](https://eng.uber.com/new-rider-app/) we wrote when releasing RIBs in production the first time and see [this short video](https://www.youtube.com/watch?v=Q5cTT0M0YXg) where we discussed how the RIBs architecture works.
+
+#### What is the difference between RIBs and MV*/VIPER?
+
+MVC, MVP, MVI, MVVM and VIPER are architecture patterns. RIBs is a framework. What differentiates RIBs from frameworks based on MV*/VIPER is:
+
+- **Business logic drives the app, not the view tree**. Unlike with MV*/VIPER, a RIB does not have to have a view. This means that the app hierarchy is driven by the business logic, not the view tree.
+- **Independent business logic and view trees**. RIBs decouple how the business logic scopes are structured from view hierarchies. This allows the application to have a deep business logic tree, isolating business logic nodes, while maintaining a shallow view hierarchy making layouts, animations and transitions easy. 
+
+There are some other novel things about RIBs. However, these could also be implemented with other MV*/VIPER frameworks. These are:
+- **Cross-platform approach**, allowing iOS and Android architecture to stay in sync.
+- **Tooling to for easier adoption** on larger apps or teams. Tooling we are open sourcing includes IDE plugins for code generation and static code analysis.
+- **Strong opinions about how state should be communicated**, using DI and Rx. Each RIB defines its dependencies and what dependencies it needs from its parent. Parent components that fulfill a child’s parent dependencies are provided to child Builders as a constructor dependency to allow for hierarchical DI scoping. This means that information is communicated via these dependencies up and down the tree.
+
 ## Usage
 
-1. Clone this repository 
+1. Clone this repository
 2. Integrate using your preferred installation mechanism
 
 For usage of the tooling built around RIBs, please see the [Tooling section](https://github.com/uber/RIBs/wiki#rib-tooling) in our documentation.
 
 ## Installation for Android
 
-The integrate the recommended minimum setup for RIBs add the following to your `build.gradle`:
+To integrate the recommended minimum setup for RIBs add the following to your `build.gradle`:
 
 ```gradle
 dependencies {
